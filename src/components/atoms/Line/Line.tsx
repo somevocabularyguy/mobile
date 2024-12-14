@@ -1,23 +1,21 @@
-import React from 'react';
+import { View, ViewStyle } from 'react-native';
 
 interface LineProps {
-  'height'?: string;
-  'width'?: string;
-  className?: string;
+  'height'?: number;
+  'width'?: number;
+  style?: ViewStyle;
 }
 
-const Line: React.FC<LineProps> = ({ height, width, className }) => {
-    const inlineStyle: React.CSSProperties = {
-      height: height || '0.125rem',
-      width: width || '0.125rem',  
-      backgroundColor: '#ffffff',
-    }
+const Line: React.FC<LineProps> = ({ height = 2, width = 2, style = {} }) => {
 
-  return (
-    <>
-      <div style={inlineStyle} className={className}></div>
-    </>
-  )
+  const inlineStyle = {
+    ...style,
+    height,
+    width,
+    backgroundColor: 'white'
+  };
+
+  return <View style={inlineStyle}></View>
 }
 
 export default Line;

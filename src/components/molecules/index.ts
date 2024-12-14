@@ -1,4 +1,3 @@
-import TextArray from './TextArray/TextArray';
-import LevelArray from './LevelArray/LevelArray';
+import LevelArray from './LevelArray';
 
-export { TextArray, LevelArray };
+export { LevelArray };

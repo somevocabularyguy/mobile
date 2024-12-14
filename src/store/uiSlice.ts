@@ -1,37 +1,38 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Position } from '@/types';
+import { LevelKey } from '@/types';
 
 interface UIState {
-  contextMenuPosition: Position | null;
   isLevelsVisible: boolean;
-  isSidebarOpen: boolean;
+  isSidebarVisible: boolean;
+  visibleLevelSectionKey: LevelKey;
+  isShadingVisible: boolean;
 }
 
 const initialState: UIState = {
-  contextMenuPosition: null,
-  isLevelsVisible: true,
-  isSidebarOpen: false
+  isLevelsVisible: false,
+  isSidebarVisible: false,
+  visibleLevelSectionKey: 'easy',
+  isShadingVisible: false
 } 
 
 const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    updateContextMenuPosition: (state, action: PayloadAction<Position | null>) => {
-      state.contextMenuPosition = action.payload;
+    updateVisibleLevelSectionKey: (state, action: PayloadAction<LevelKey>) => {
+      state.visibleLevelSectionKey = action.payload
     },
-    toggleIsLevelsVisible: (state, action: PayloadAction<boolean | undefined>) =>  {
-      if (typeof action.payload === 'boolean') {
-        state.isLevelsVisible = action.payload;
-      } else {
-        state.isLevelsVisible = !state.isLevelsVisible;
-      }
+    updateIsLevelsVisible: (state, action: PayloadAction<boolean>) =>  {
+      state.isLevelsVisible = action.payload;
     },
-    toggleIsSidebarOpen: (state, action: PayloadAction<boolean>) => {
-      state.isSidebarOpen = action.payload;
+    updateIsSidebarVisible: (state, action: PayloadAction<boolean>) => {
+      state.isSidebarVisible = action.payload;
+    },
+    updateIsShadingVisible: (state, action: PayloadAction<boolean>) => {
+      state.isShadingVisible = action.payload;
     }
   }
 })
 
-export const { updateContextMenuPosition, toggleIsLevelsVisible, toggleIsSidebarOpen } = uiSlice.actions;
+export const { updateIsLevelsVisible, updateIsSidebarVisible, updateVisibleLevelSectionKey, updateIsShadingVisible } = uiSlice.actions;
 export default uiSlice.reducer;

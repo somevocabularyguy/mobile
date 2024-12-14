@@ -1,3 +1,3 @@
-import ScrollRail from './ScrollRail/ScrollRail';
+import ScrollRail from './ScrollRail';
 
 export { ScrollRail };

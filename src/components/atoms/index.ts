@@ -1,8 +1,5 @@
-import Button from './Button/Button';
-import Text from './Text/Text';
-import Level from './Level/Level';
-import Line from './Line/Line';
+import Level from './Level';
+import Line from './Line';
 
-
-export { Button, Text, Level, Line }
+export { Level, Line }
 

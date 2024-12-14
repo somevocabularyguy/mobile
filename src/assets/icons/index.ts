@@ -9,5 +9,7 @@ import GuideIcon from './guide-icon.svg';
 import EmailIcon from './email-icon.svg';
 import LevelsToggleIcon from './levels-toggle-icon.svg';
 import DeleteIcon from './delete-icon.svg';
+import AccountIcon from './account-icon.svg';
+import ArrowIcon from './arrow-icon.svg'
 
-export { MainIcon, HomeIcon, FeedbackIcon, ProfileIcon, InfoIcon, SearchIcon, SettingsIcon, GuideIcon, EmailIcon, LevelsToggleIcon, DeleteIcon };
+export { MainIcon, HomeIcon, FeedbackIcon, ProfileIcon, InfoIcon, SearchIcon, SettingsIcon, GuideIcon, EmailIcon, LevelsToggleIcon, DeleteIcon, AccountIcon, ArrowIcon };

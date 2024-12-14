@@ -1,4 +1,3 @@
-import ContextMenu from './ContextMenu/ContextMenu';
-import Sidebar from './Sidebar/Sidebar';
+import Shading from './Shading';
 
-export { ContextMenu, Sidebar };
+export { Shading };

@@ -52,4 +52,11 @@ interface FeedbackData {
   files: File[];
 }
 
-export type { Word, LevelObject, Position, WordData, UserData, RGB, FeedbackData };
+interface OptionObject {
+  key: string,
+  text: string
+}
+
+type LevelKey = 'easy' | 'medium' | 'hard' | 'expert' | 'custom';
+
+export type { Word, LevelObject, Position, WordData, UserData, RGB, FeedbackData, LevelKey, OptionObject };

@@ -1,15 +1,21 @@
-import { Text, View } from "react-native";
+// import styles from './index.styles.js';
+
+import { useAppSelector } from '@/store/store';
+
+import Main from '@/components/Main';
+import Feedback from '@/components/Feedback';
+import Levels from '@/components/Levels';
 
 export default function Index() {
+
+  const loading = useAppSelector(state => state.data.loading);
+
+  // if (loading) return <Text>loading...</Text>
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-    </View>
+    <Main />
+
+    // <Feedback /> 
+    // <Levels />
   );
 }
