@@ -17,14 +17,15 @@ const styles = StyleSheet.create({
   mainButton: {
     width: 120,
     height: 84,
-    border: 'none',
     borderRadius: 4,
     backgroundColor: '#f2b500',
+    justifyContent: 'center',
+    padding: 10
   },
   mainButtonText: {
     textAlign: 'center',
+    lineHeight: 32,
     fontSize: 24,
-    lineHeight: 78,
     fontFamily: 'Poppins',
   },
   sideButtonsContainer: {

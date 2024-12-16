@@ -44,7 +44,7 @@ const FeedbackDropdown: React.FC = () => {
 
   return (
     <View style={styles.dropdownContainer}>
-      <Text style={styles.dropdownText}>Select Feedback Type:</Text>
+      <Text style={styles.dropdownText}>{t("label")}</Text>
       <Pressable style={dropdownButtonStyle} onPress={toggleDropdown}>
         <View style={styles.dropdownButtonInnerContainer}>
           <Text style={styles.dropdownButtonText}>{selectedTypeObject.text}</Text>

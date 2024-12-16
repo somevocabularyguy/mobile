@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  hiddenCustomSection: {
+  section: {
     height: 0,
     backgroundColor: "#424242",
     borderWidth: 8,
@@ -11,12 +11,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
     width: "100%",
-    // transition: height 0.4s ease-in-out, 
   },
-  hiddenCustomSectionVisible: {
+  sectionVisible: {
     height: 500,
   },
-  hiddenCustomContainer: {
+  container: {
     backgroundColor: "#343434",
     borderWidth: 4,
     borderColor: "#646464",
@@ -24,13 +23,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   }, 
-  hiddenCustomLabel: {
+  label: {
     fontSize: 24,
     textAlign: "center",
     margin: 0,
     color: "white"
   },
-  hiddenCustomSearch: {
+  search: {
     width: "100%",
     height: 40,
     borderRadius: 0,
@@ -48,11 +47,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white"
   },
-  hiddenCustomWordsContainer: {
+  wordsContainer: {
     width: "100%",
     height: 400,
   },
-  hiddenCustomWordContainer: {
+  wordContainer: {
     width: "100%",
     height: 44,
     alignItems: "center",
@@ -60,19 +59,16 @@ const styles = StyleSheet.create({
     borderColor: "#646464",
     flexDirection: "row"
   },
-  hiddenCustomWordText: {
+  wordText: {
     textAlign: "center",
     fontSize: 20,
     flex: 1,
   },  
-  hiddenCustomDeleteIcon: {
+  deleteIcon: {
     height: "100%",
     width: 96,
     padding: 6,
     backgroundColor: "#cc0000",
-  },
-  highlightedSubtext: {
-    color: "#2aaaff",
   },
   notFoundText: {
     width: "100%",

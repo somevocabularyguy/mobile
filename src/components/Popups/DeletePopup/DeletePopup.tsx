@@ -26,7 +26,7 @@ const DeletePopup: React.FC = () => {
     try {
     const response = await deleteAccount();
       if (response.status === 202) {
-        window.alert(t("deletedAlert"));
+        window.alert(t("deleteAlert"));
         // window.location.href = 'http://localhost:3000/settings'; //* Will Change
         dispatch(updateLoadingState(false));
       }
@@ -49,14 +49,14 @@ const DeletePopup: React.FC = () => {
 
   return (
     <View style={deletePopupStyle} pointerEvents={isDeletePopupVisible ? 'auto' : 'none'}>
-      <Text style={styles.popupText}>{t("Delete.text1")}</Text>
-      <Text style={styles.popupText}>{t("Delete.text2")}</Text>
+      <Text style={styles.popupText}>{t("text1")}</Text>
+      <Text style={styles.popupText}>{t("text2")}</Text>
       <View style={styles.buttonsContainer}>
         <Pressable style={styles.blankButton} onPress={closePopup}>
-          <Text style={styles.buttonText}>{t("Delete.backButton")}</Text>
+          <Text style={styles.buttonText}>{t("backButton")}</Text>
         </Pressable>
         <Pressable style={[styles.blankButton, styles.deleteButton]} onPress={handleDeleteAccount}>
-          <Text style={styles.buttonText}>{t("Delete.deleteButton")}</Text>
+          <Text style={styles.deleteButtonText}>{t("deleteButton")}</Text>
         </Pressable>
       </View>
     </View>

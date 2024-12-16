@@ -33,7 +33,7 @@ const AccountSettings: React.FC = () => {
     dispatch(updateIsDeletePopupVisible(true));
   }
 
-  const accountSectionClassName = [
+  const accountSectionStyle = [
     styles.accountSection, 
     isAccountSettingsVisible ? styles.accountSectionVisible : {}
   ];
@@ -45,11 +45,11 @@ const AccountSettings: React.FC = () => {
         labelText={t("labelText")} 
         isVisible={isAccountSettingsVisible}
       />
-        <View style={accountSectionClassName}>
+        <View style={accountSectionStyle}>
           {isSignedIn ?
             <>
               <Pressable style={styles.blankButton} onPress={openSignOutPopup}>
-                <Text style={styles.blankButtonText}>{t("blankButton")}</Text>
+                <Text style={styles.blankButtonText}>{t("signOutButton")}</Text>
               </Pressable>
               <Pressable style={[styles.blankButton, styles.deleteButton]} onPress={openDeletePopup}>
                 <Text style={styles.deleteButtonText}>{t("deleteButton")}</Text>

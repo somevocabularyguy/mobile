@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
     fontSize: 13
   },
   dropdownArrowIcon: {
-    transform: [{ rotate: '90deg' }],
+    transform: [{ rotate: '180deg' }],
     position: 'absolute',
     top: 3,
     right: 5,
   },
   dropdownArrowIconActive: {
-    transform: [{ rotate: '0deg' }],
+    transform: [{ rotate: '90deg' }],
     position: 'absolute',
     top: 3,
     right: 5,

@@ -11,7 +11,7 @@ interface SectionLabelProps {
 
 const SectionLabel: React.FC<SectionLabelProps> = ({ handleToggleSection, labelText, isVisible }) => {
 
-  const sectionToggleIconClassName = [
+  const sectionToggleIconStyle = [
     styles.sectionToggleIcon, 
     isVisible ? styles.sectionToggleIconActive : {}
   ];
@@ -19,7 +19,7 @@ const SectionLabel: React.FC<SectionLabelProps> = ({ handleToggleSection, labelT
   return (
     <Pressable onPress={handleToggleSection} style={styles.sectionLabelContainer}>
       <Text style={styles.sectionLabel}>{labelText}</Text>
-      <ArrowIcon width={40} height={40} style={sectionToggleIconClassName}/>
+      <ArrowIcon width={40} height={40} style={sectionToggleIconStyle}/>
     </Pressable>
   )
 }

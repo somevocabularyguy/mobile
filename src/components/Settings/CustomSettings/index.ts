@@ -1,3 +1,3 @@
-import HiddenCustomSettings from './HiddenCustomSettings';
+import CustomSettings from './CustomSettings';
 
-export default HiddenCustomSettings;
+export default CustomSettings;

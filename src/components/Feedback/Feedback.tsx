@@ -27,7 +27,6 @@ const FeedbackPage: React.FC = () => {
   const isFeedbackDropdownActive = useAppSelector(state => state.feedbackUi.isFeedbackDropdownActive)
 
   const handleSubmit = async (event: GestureResponderEvent) => {   
-    console.log('aa')
     event.stopPropagation()
     if (!selectedTypeObject.key || !feedbackText) return;
 
@@ -64,14 +63,14 @@ const FeedbackPage: React.FC = () => {
     <Pressable style={styles.container} onPress={closeDropdown}>
       <View style={styles.formContainer}>
 
-        <Text style={[styles.thanksDiv, isSended ? {} : styles.hidden]}>Thank you for feedback!</Text>
+        <Text style={[styles.thanksDiv, isSended ? {} : styles.hidden]}>{t('thankingText')}</Text>
 
         <FeedbackDropdown />
         <FeedbackTextarea />
         <FeedbackFileInput files={files} setFiles={setFiles} />
 
         <Pressable style={styles.submitButton} onPress={handleSubmit}>
-          <Text style={styles.submitButtonText}>Submit Feedback</Text>
+          <Text style={styles.submitButtonText}>{t('submitButton')}</Text>
         </Pressable>
 
       </View>

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     textAlign: "center",
-    fontSize: 64,
+    fontSize: 48,
   }
 })
 

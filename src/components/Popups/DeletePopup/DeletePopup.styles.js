@@ -9,8 +9,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#e9e9ed",
   },
   deleteButton: {
-    fontWeight: "bold",
     backgroundColor: "#cc0000",
+  },
+  deleteButtonText: {
+    textAlign: "center",
+    lineHeight: 46,
+    fontWeight: "bold",
+    fontSize: 16,
     color: "#ffecec",
   },
   buttonText: {

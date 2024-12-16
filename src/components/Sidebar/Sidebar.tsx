@@ -16,7 +16,7 @@ import { MainIcon, HomeIcon, FeedbackIcon, ProfileIcon, InfoIcon, SettingsIcon, 
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const t = useCustomTranslation();
+  const t = useCustomTranslation('Sidebar');
 
   const currentPath = usePathname();
 
@@ -71,19 +71,19 @@ const Sidebar: React.FC = () => {
         <Link href="/" style={returnLinkStyle('/')}>
           <View style={styles.sidebarLinkContainer}>
             <HomeIcon width={36} height={36} />
-            <Text style={styles.sidebarLinkText}>Home</Text>
+            <Text style={styles.sidebarLinkText}>{t('home')}</Text>
           </View>
         </Link>
         <Link href="/settings" style={returnLinkStyle('/settings')}>
           <View style={styles.sidebarLinkContainer}>
             <SettingsIcon width={36} height={36} />
-            <Text style={styles.sidebarLinkText}>Settings</Text>
+            <Text style={styles.sidebarLinkText}>{t('settings')}</Text>
           </View>
         </Link>
         <Link href="/progress" style={returnLinkStyle('/progress')}>
           <View style={styles.sidebarLinkContainer}>
             <ProfileIcon width={36} height={36} />
-            <Text style={styles.sidebarLinkText}>Progress</Text>
+            <Text style={styles.sidebarLinkText}>{t('progress')}</Text>
           </View>
         </Link>
 
@@ -92,19 +92,19 @@ const Sidebar: React.FC = () => {
         <Link href="/user-guide" style={returnLinkStyle('/user-guide')}>
           <View style={styles.sidebarLinkContainer}>
             <GuideIcon height={32} width={36} />
-            <Text style={styles.sidebarLinkText}>How To Use</Text>
+            <Text style={styles.sidebarLinkText}>{t('guide')}</Text>
           </View>
         </Link>
         <Link href="/feedback" style={returnLinkStyle('/feedback')}>
           <View style={styles.sidebarLinkContainer}>
             <FeedbackIcon height={36} width={36} />
-            <Text style={styles.sidebarLinkText}>Feedback</Text>
+            <Text style={styles.sidebarLinkText}>{t('feedback')}</Text>
           </View>
         </Link>
         <Link href="/about" style={returnLinkStyle('/about')}>
           <View style={styles.sidebarLinkContainer}>
             <InfoIcon width={36} height={36} />
-            <Text style={styles.sidebarLinkText}>About</Text>
+            <Text style={styles.sidebarLinkText}>{t('about')}</Text>
           </View>
         </Link>
 
@@ -113,11 +113,11 @@ const Sidebar: React.FC = () => {
         {isSignedIn ? 
           <Pressable style={styles.signInButton} onPress={openSignOutPopup}>
             {/* <ExitIcon /> */}
-            <Text style={styles.signInButtonText}>{t("signOutButton")}</Text>
+            <Text style={styles.signInButtonText}>{t("signOut")}</Text>
           </Pressable>
           :
           <Pressable style={styles.signInButton} onPress={openSignInPopup}>
-            <Text style={styles.signInButtonText}>{t("signInButton")}</Text>
+            <Text style={styles.signInButtonText}>{t("signIn")}</Text>
           </Pressable>
         }
       </View>

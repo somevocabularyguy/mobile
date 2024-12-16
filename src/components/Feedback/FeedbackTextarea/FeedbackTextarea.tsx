@@ -32,13 +32,13 @@ const FeedbackTextarea: React.FC = () => {
 
   return (
     <View style={styles.textareaContainer}>
-      <Text style={styles.textareaLabel}>Describe Your Feedback:</Text>
+      <Text style={styles.textareaLabel}>{t('label')}</Text>
       <TextInput
         style={[styles.textarea, { height: textareaHeight}]}
         value={feedbackText}
         onChangeText={handleFeedbackTextChange}
         multiline={true}
-        placeholder="Enter your feedback..."
+        placeholder={t('placeholder')}
         placeholderTextColor="rgba(255, 255, 255, 0.2)"
         onContentSizeChange={handleTextareaSizeChange}
       />

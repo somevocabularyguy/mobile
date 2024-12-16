@@ -7,7 +7,7 @@ import { useAppSelector } from '@/store/store';
 
 const MainButtons: React.FC = () => {
 
-  const t = useCustomTranslation();
+  const t = useCustomTranslation('Main.MainButtons');
 
   const  { handleNext, handleShow, handleHideWord, handleAddToCustom, handleRemoveCustomWord } = useMainButtonsUtils()
 
@@ -19,10 +19,10 @@ const MainButtons: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.mainButtonsContainer}>
         <Pressable style={styles.mainButton} onPress={() => handleNext()}>
-          <Text style={styles.mainButtonText}>Next</Text>
+          <Text style={styles.mainButtonText}>{t('nextButton')}</Text>
         </Pressable>
         <Pressable style={styles.mainButton} onPress={handleShow}>
-          <Text style={styles.mainButtonText}>Show</Text>
+          <Text style={styles.mainButtonText}>{t('showButton')}</Text>
         </Pressable>
       </View>
       <View style={styles.sideButtonsContainer}>

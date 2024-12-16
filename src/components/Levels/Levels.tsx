@@ -9,9 +9,11 @@ import { updateIsLevelsVisible } from '@/store/uiSlice';
 import { ArrowIcon } from '@/assets/icons';
 
 import { LevelWords, LevelBox } from './';
+import { useCustomTranslation } from '@/hooks';
 
 const Levels: React.FC = () => {
   const dispatch = useAppDispatch();
+  const t = useCustomTranslation('Levels');
 
   const isLevelsVisible = useAppSelector(state => state.ui.isLevelsVisible);
 
@@ -38,7 +40,7 @@ const Levels: React.FC = () => {
 
         <LevelWords />
 
-        <Text style={styles.checkedLevelAmountText}>{checkedLevelAmount + ' Levels Selected'}</Text>
+        <Text style={styles.checkedLevelAmountText}>{`${checkedLevelAmount} ${t('levelsSelectedText')}`}</Text>
 
         <LevelBox />
 

@@ -11,7 +11,7 @@ import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateIsSignOutPopupVisible } from '@/store/accountUiSlice';
 
 const SignOutPopup: React.FC = () => {
-  const t = useCustomTranslation("Popups.SignOut");
+  const t = useCustomTranslation("Popups.SignOutPopup");
   const dispatch = useAppDispatch();
 
   const isSignOutPopupVisible = useAppSelector(state => state.accountUi.isSignOutPopupVisible);
@@ -48,8 +48,8 @@ const SignOutPopup: React.FC = () => {
   return (
     <View style={signOutPopupStyle} pointerEvents={isSignOutPopupVisible ? 'auto' : 'none'}>
       <Text style={styles.popupText}>
-        {t("text")}
-        <Link href="/progress">
+        {t("text") + ' '}
+        <Link href="/settings">
           <Text style={styles.progressLinkText}>{t("link")}</Text>
         </Link>
       </Text>

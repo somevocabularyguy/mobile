@@ -9,9 +9,10 @@ import { Text, View, TextInput, FlatList } from 'react-native';
 import { DeleteIcon } from '@/assets/icons';
 import { SectionLabel } from '../reuseable';
 import { useCustomTranslation } from '@/hooks';
+import { highlightSubtext } from '@/utils/tsxUtils';
 
 const CustomSettings: React.FC = () => {
-  const t = useCustomTranslation("Settings.CustomSettings");
+  const t = useCustomTranslation("Settings.HiddenCustomSettings.CustomSettings");
 
   const dispatch = useAppDispatch();
 
@@ -30,27 +31,11 @@ const CustomSettings: React.FC = () => {
     dispatch(removeCustomWordId(wordId));
   }
 
-  const highlightSubtext = (text: string, subtext: string) => {
-    const index = text.indexOf(subtext);
-
-    const before = text.slice(0, index);
-    const match = text.slice(index, index + subtext.length);
-    const after = text.slice(index + subtext.length);
-
-    return (
-      <Text>
-        {before}
-        <Text style={styles.highlightedSubtext}>{match}</Text>
-        {after}
-      </Text>
-    );
-  }; 
-
   const isCustomSettingsVisible = useAppSelector(state => state.settingsUi.isCustomSettingsVisible);
 
-  const hiddenCustomSectionClassName = [
-    styles.hiddenCustomSection, 
-    isCustomSettingsVisible ? styles.hiddenCustomSectionVisible : {}
+  const customSectionStyle = [
+    styles.section, 
+    isCustomSettingsVisible ? styles.sectionVisible : {}
   ];
 
   const handleToggleSection = () => {
@@ -65,26 +50,26 @@ const CustomSettings: React.FC = () => {
         isVisible={isCustomSettingsVisible} 
       />
       
-      <View style={hiddenCustomSectionClassName}>
+      <View style={customSectionStyle}>
 
-        <View style={styles.hiddenCustomContainer}>
-          <Text style={styles.hiddenCustomLabel}>{t("removeCustomLabel")}</Text>
+        <View style={styles.container}>
+          <Text style={styles.label}>{t("removeCustomLabel")}</Text>
           <TextInput 
-            style={styles.hiddenCustomSearch}
+            style={styles.search}
             placeholder={t("placeholder")}
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             value={customSearchValue}
             onChangeText={text => setCustomSearchValue(text)}
           />
           <FlatList
-            style={styles.hiddenCustomWordsContainer}
+            style={styles.wordsContainer}
             data={customWordsFiltered}
             renderItem={({ item }) => {
               const highlightedWord = highlightSubtext(item.word, customSearchValue)
               return (
-                <View style={styles.hiddenCustomWordContainer}>
-                  <Text style={styles.hiddenCustomWordText}>{highlightedWord}</Text>
-                  <DeleteIcon onClick={() => handleRemoveCustomWord(item.id)} style={styles.hiddenCustomDeleteIcon} />
+                <View style={styles.wordContainer}>
+                  <Text style={styles.wordText}>{highlightedWord}</Text>
+                  <DeleteIcon onClick={() => handleRemoveCustomWord(item.id)} style={styles.deleteIcon} />
                 </View> 
               )
             }}
@@ -92,7 +77,7 @@ const CustomSettings: React.FC = () => {
             numColumns={1}
             ListEmptyComponent={() => (
               customWords.length ?
-                <Text style={styles.notFoundText}>{t("noWordsText")}</Text>
+                <Text style={styles.notFoundText}>{t("noResultText")}</Text>
                 : <Text style={styles.notFoundText}>{t("noCustomWordsText")}</Text>
             )}
           />

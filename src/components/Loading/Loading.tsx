@@ -1,10 +1,13 @@
 import styles from './Loading.styles.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { useAppSelector } from '@/store/store';
+import { useCustomTranslation } from '@/hooks';
 
 import { Text, View } from 'react-native';
 
 const Loading: React.FC = () => {
+  const t = useCustomTranslation('Loading');
+
   const loading = useAppSelector(state => state.data.loading);
   const [animationIndex, setAnimationIndex] = useState(3);
   const animationIndexRef = useRef(animationIndex);
@@ -32,7 +35,7 @@ const Loading: React.FC = () => {
     <>
       {loading && 
         <View style={styles.container}>
-          <Text style={styles.loadingText}>Loading{'.'.repeat(animationIndex)}</Text>
+          <Text style={styles.loadingText}>{t('loadingText')}{'.'.repeat(animationIndex)}</Text>
         </View>
       }
     </>    
