@@ -12,7 +12,7 @@ import { sendMagicLink } from '@/lib/api';
 import { useCustomTranslation } from '@/hooks';
 
 const SignInPopup: React.FC = () => {
-  const t = useCustomTranslation('Popups.SignInPopup');
+  const { t } = useCustomTranslation('Popups.SignInPopup');
 
   const isSignInPopupVisible = useAppSelector(state => state.accountUi.isSignInPopupVisible);
 

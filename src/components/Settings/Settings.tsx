@@ -1,6 +1,9 @@
 import styles from './Settings.styles.js';
 
-import { HiddenSettings, CustomSettings, AccountSettings } from './';
+import HiddenSettings from './HiddenSettings';
+import CustomSettings from './CustomSettings';
+import AccountSettings from './AccountSettings';
+
 import { View } from 'react-native';
 
 const Settings: React.FC = () => {

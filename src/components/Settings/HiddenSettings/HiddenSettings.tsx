@@ -12,7 +12,7 @@ import { useCustomTranslation } from '@/hooks';
 import { highlightSubtext } from '@/utils/tsxUtils';
 
 const HiddenSettings: React.FC = () => {
-  const t = useCustomTranslation("Settings.HiddenCustomSettings.HiddenSettings");
+  const { t } = useCustomTranslation("Settings.HiddenCustomSettings.HiddenSettings");
 
   const dispatch = useAppDispatch();
 

@@ -13,7 +13,7 @@ import { updateIsSidebarVisible } from '@/store/uiSlice';
 // import { updateIsSignedIn } from '@/store/userSettingsSlice';
 
 import { returnUserData } from '@/utils/userDataUtils';
-import { useCreateLevels } from '@/hooks';
+import useCreateLevels from './useCreateLevels';
 
 const useLoadApp = () => {
   const dispatch = useAppDispatch();

@@ -1,27 +1,47 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import * as Localization from "expo-localization";
+import { createInstance } from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import i18nConfig from '@/i18nConfig';
+import resourcesToBackend from 'i18next-resources-to-backend';
 
-import resources from '@/locales';
-import storage from '@/storage';
+import loadTranslation from '@/locales';
 
-const initI18n = async () => {
-  let savedLanguage = await storage.getItem("language") as string | null;
+export default async function initTranslations(
+  locale: string,
+  namespaces: string[],
+  i18nInstance?: ReturnType<typeof createInstance>,
+  isWords?: boolean 
+) {
 
-  savedLanguage = savedLanguage || Localization.getLocales()[0].languageCode || 'en';
+  i18nInstance = i18nInstance || createInstance();
 
-  i18n.use(initReactI18next).init({
-    resources,
-    lng: savedLanguage,
-    fallbackLng: "en",
-    interpolation: {
-      escapeValue: false,
-    },
+  i18nInstance.use(initReactI18next);
+
+  i18nInstance.use(
+    resourcesToBackend(
+      async (language: string, namespace: string) => {        
+        try {
+          const translations = loadTranslation(language, namespace, isWords);
+          return translations;
+        } catch (error) {
+          console.error(error); 
+          return {}
+        }
+      }
+    )
+  );
+
+  await i18nInstance.init({
+    lng: locale,
+    fallbackLng: i18nConfig.defaultLocale,
+    supportedLngs: i18nConfig.locales,
+    defaultNS: namespaces[0],
+    fallbackNS: namespaces[0],
+    ns: namespaces,
   });
-};
 
-initI18n();
-
-export default i18n;
-
-
+  return {
+    i18n: i18nInstance,
+    resources: i18nInstance.services.resourceStore.data,
+    t: i18nInstance.t,
+  };
+}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Word } from '@/types';
 
 import { updateSingleWordData } from '@/utils/keepLogUtils';
-import { useUpdateSingleLevel } from '@/hooks';
+import useUpdateSingleLevel from './useUpdateSingleLevel';
 
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { updateUserUseTime, updateWordData } from '@/store/userDataSlice';

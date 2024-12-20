@@ -9,7 +9,7 @@ import { extractParts } from '@/utils/generalUtils';
 import { useAppSelector } from '@/store/store';
 
 const LevelWords: React.FC  = () => {
- const t = useCustomTranslation('Levels.LevelWords');
+ const { t } = useCustomTranslation('Levels.LevelWords');
 
   const words = useAppSelector(state => state.data.words);
   const lastSelectedLevel = useAppSelector(state => state.appState.lastSelectedLevel);

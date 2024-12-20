@@ -1,4 +1,5 @@
-import { useReturnNextDisplayWordObject, useKeepLog } from '@/hooks'; 
+import useReturnNextDisplayWordObject from './useReturnNextDisplayWordObject'; 
+import useKeepLog from './useKeepLog'; 
 
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateDisplayWordObject, updateIsShown } from '@/store/wordSlice';

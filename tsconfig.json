@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "module": "es2020",
     "resolveJsonModule": true,
     "paths": {
       "@/*": [

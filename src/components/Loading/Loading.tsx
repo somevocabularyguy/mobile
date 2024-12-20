@@ -6,7 +6,7 @@ import { useCustomTranslation } from '@/hooks';
 import { Text, View } from 'react-native';
 
 const Loading: React.FC = () => {
-  const t = useCustomTranslation('Loading');
+  const { t } = useCustomTranslation('Loading');
 
   const loading = useAppSelector(state => state.data.loading);
   const [animationIndex, setAnimationIndex] = useState(3);

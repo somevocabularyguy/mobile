@@ -1,4 +1,6 @@
-import { MainLabels, MainButtons } from './';
+import MainButtons from './MainButtons';
+import MainLabels from './MainLabels';
+
 import styles from './Main.styles.js';
 import { View } from 'react-native';
 

@@ -1,4 +1,4 @@
-
+import React from 'react';
 
 const UserGuide: React.FC = () => {
   return (
@@ -7,3 +7,5 @@ const UserGuide: React.FC = () => {
     </>
   )
 }
+
+export default UserGuide;
