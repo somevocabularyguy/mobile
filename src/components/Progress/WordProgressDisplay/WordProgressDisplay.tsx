@@ -1,24 +1,26 @@
 import styles from './WordProgressDisplay.styles.js';
 
-import { Word, WordData } from '@/types';
+import { WordData } from '@/types';
 import { Text, View } from 'react-native';
+import { TText } from '@/components/atoms';
+import { useCustomTranslation } from '@/hooks';
+
 
 interface SelectedWordDisplayProps {
   selectedWordData: WordData | undefined;
-  selectedWordObject: Word | undefined;
 }
 
-const WordProgressDisplay: React.FC<SelectedWordDisplayProps> = ({ selectedWordData, selectedWordObject }) => {
+const WordProgressDisplay: React.FC<SelectedWordDisplayProps> = ({ selectedWordData }) => {
 
-  if (!selectedWordData || !selectedWordObject) {
+  const t = useCustomTranslation();
+
+  if (!selectedWordData) {
     return (
       <View style={styles.container}>
-        <Text style={styles.notSelectedText}>No Word Is Selected!</Text>
+        <Text style={styles.notSelectedText}>{t('noWordSelected')}</Text>
       </View>
     );
   }
-
-  const { word } = selectedWordObject;
 
   const { notShownTimeSpent, shownTimeSpent, notShownSeen, shownSeen } = selectedWordData;
 
@@ -39,7 +41,7 @@ const WordProgressDisplay: React.FC<SelectedWordDisplayProps> = ({ selectedWordD
 
   return (
     <View style={styles.container}>
-      <Text style={styles.dataText}>{word}</Text>
+      <TText style={styles.dataText} wordId={selectedWordData.id} dataKey="word" />
       <Text style={styles.dataText}>Times Seen: {notShownSeen}</Text>
       <Text style={styles.dataText}>Times Details Shown: {shownSeen}</Text>
       <Text style={styles.dataText}>Total Time Spent On Word: {timeSpentText}</Text>

@@ -15,7 +15,7 @@ import { useCustomTranslation } from '@/hooks';
 
 const Levels: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { t } = useCustomTranslation('Levels');
+  const t = useCustomTranslation('Levels');
 
   const isLevelsVisible = useAppSelector(state => state.ui.isLevelsVisible);
 

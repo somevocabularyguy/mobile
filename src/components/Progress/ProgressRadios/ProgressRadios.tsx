@@ -1,22 +1,34 @@
 import styles from './ProgressRadios.styles.js';
 import { useState } from 'react';
 
-import { Word, WordData } from '@/types';
+import { WordData } from '@/types';
 import { highlightSubtext } from '@/utils/tsxUtils';
+
+import { useCustomTranslation } from '@/hooks';
 
 import { Text, FlatList, Pressable, View, TextInput } from 'react-native'; 
 
 import { useAppSelector } from '@/store/store';
 
 interface ProgressRadiosProps {
-  wordsMap: Map<string, Word>;
   selectedWordId: string;
   setSelectedWordId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ProgressRadios: React.FC<ProgressRadiosProps> = ({ wordsMap, selectedWordId, setSelectedWordId }) => {
+const ProgressRadios: React.FC<ProgressRadiosProps> = ({ selectedWordId, setSelectedWordId }) => {
 
-  const wordsData = useAppSelector(state => state.userData.userData.wordsData);
+  const t = useCustomTranslation("Progress.ProgressRadios");
+
+  const [searchValue, setSearchValue] = useState('');
+  const userData = useAppSelector(state => state.userData.userData); 
+  const wordsData = userData.wordsData;
+
+  const wordsLanguage = userData.languageArray[0];
+  const wordResources = useAppSelector(state => state.language.wordResources); 
+
+  const filteredWordsData = wordsData.filter(wordData => (
+    wordResources[wordsLanguage][wordData.id].word.includes(searchValue)
+  ));
 
   const radioTextButtonStyle = (wordId: string) => {
     return [
@@ -25,30 +37,27 @@ const ProgressRadios: React.FC<ProgressRadiosProps> = ({ wordsMap, selectedWordI
     ];
   }
 
-  const [searchValue, setSearchValue] = useState('');
-
   return (
     <View style={styles.radioContainer}>
       <TextInput 
         // style={styles.search}
-        placeholder="Search for word..."
+        placeholder={t("searchPlaceholder")}
         placeholderTextColor="rgba(0, 0, 0, 0.4)"
         value={searchValue}
         onChangeText={text => setSearchValue(text)}
       />
       <FlatList
-        data={wordsData}
+        data={filteredWordsData}
         renderItem={({ item }: { item: WordData }) => {
-          const wordObject = wordsMap.get(item.id);
-          if (!wordObject?.id) return null;
+          const word = wordResources[wordsLanguage][item.id].word;
 
-          const wordName = highlightSubtext(wordObject.word, searchValue);
+          const wordName = highlightSubtext(word, searchValue);
           if (!wordName) return null;
 
           return (
             <Pressable 
-              style={radioTextButtonStyle(wordObject.id)} 
-              onPress={() => setSelectedWordId(wordObject.id)}
+              style={radioTextButtonStyle(item.id)} 
+              onPress={() => setSelectedWordId(item.id)}
             >
               <Text style={styles.radioText}>{wordName}</Text>
             </Pressable>
@@ -57,7 +66,9 @@ const ProgressRadios: React.FC<ProgressRadiosProps> = ({ wordsMap, selectedWordI
         keyExtractor={(item: WordData) => `progressRadioText${item.id}`}
         numColumns={2}
         ListEmptyComponent={() => (
-          <Text style={styles.notFound}>No Progress Data Found!</Text>
+          wordsData.length ? 
+            <Text style={styles.notFound}>{t("noProgress")}</Text>
+            : <Text style={styles.notFound}>{t("noProgress")}</Text>
         )}
       />
     </View>

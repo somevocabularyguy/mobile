@@ -1,5 +1,6 @@
 import useReturnNextDisplayWordObject from './useReturnNextDisplayWordObject'; 
 import useKeepLog from './useKeepLog'; 
+import { useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateDisplayWordObject, updateIsShown } from '@/store/wordSlice';
@@ -20,7 +21,9 @@ const useMainButtonsUtils = () => {
       dispatch(updateIsShown(false));
     }
     dispatch(updateDisplayWordObject(nextDisplayWordObject));
-    callKeepLog()
+    if (iterate) {
+      callKeepLog()
+    }
   }
 
   const handleShow = () => {
@@ -33,20 +36,24 @@ const useMainButtonsUtils = () => {
   const handleHideWord = () => {
     if (!displayWordObject?.id) return;
     dispatch(addHiddenWordId(displayWordObject.id))
-    handleNext(false);
   }
 
   const handleAddToCustom = () => {
     if (!displayWordObject?.id) return;
     dispatch(addCustomWordId(displayWordObject.id));
-    handleNext(false);
   }
 
   const handleRemoveCustomWord = () => {
     if (!displayWordObject?.id) return;
     dispatch(removeCustomWordId(displayWordObject.id));
-    handleNext(false);
   }
+
+  useEffect(() => {
+    return () => {
+      dispatch(updateDisplayWordObject(null));
+      dispatch(updateIsShown(false));
+    }
+  }, [])
 
   return { handleNext, handleShow, handleHideWord, handleAddToCustom, handleRemoveCustomWord };
 }

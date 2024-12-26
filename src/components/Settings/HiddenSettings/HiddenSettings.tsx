@@ -1,35 +1,35 @@
-import styles from './HiddenSettings.styles.js';
 import { useState } from 'react';
+import { TText } from '@/components/atoms';
+import styles from './HiddenSettings.styles.js';
+import { Text, View, TextInput, FlatList } from 'react-native';
 
-import { useAppSelector, useAppDispatch } from '@/store/store';
 import { removeHiddenWordId } from '@/store/userDataSlice';
+import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateIsHiddenSettingsVisible } from '@/store/settingsUiSlice';
 
-import { Text, View, TextInput, FlatList } from 'react-native';
 import { DeleteIcon } from '@/assets/icons';
 import { SectionLabel } from '../reuseable';
 import { useCustomTranslation } from '@/hooks';
-import { highlightSubtext } from '@/utils/tsxUtils';
 
 const HiddenSettings: React.FC = () => {
-  const { t } = useCustomTranslation("Settings.HiddenCustomSettings.HiddenSettings");
+  const t = useCustomTranslation("Settings.HiddenCustomSettings.HiddenSettings");
 
   const dispatch = useAppDispatch();
 
-  const words = useAppSelector(state => state.data.words);
-  const userData = useAppSelector(state => state.userData.userData);
-
-  const hiddenWordIdsSet = new Set(userData.hiddenWordIds);
-
   const [hiddenSearchValue, setHiddenSearchValue] = useState('');
 
-  const hiddenWords = words.filter(wordObject => hiddenWordIdsSet.has(wordObject.id));
+  const userData = useAppSelector(state => state.userData.userData);
+  const wordResources = useAppSelector(state => state.language.wordResources);
 
-  const hiddenWordsFiltered = hiddenWords.filter(wordObject => wordObject.word.indexOf(hiddenSearchValue) !== -1)
-
+  const hiddenWordIds = userData.hiddenWordIds;
+  const wordsLanguage = userData.languageArray[0];
+  if (!Object.keys(wordResources)) return;
+  const filteredHiddenWordIds = hiddenWordIds.filter(wordId => 
+    wordResources[wordsLanguage][wordId].word.includes(hiddenSearchValue))
 
   const handleRemoveHiddenWord = (wordId: string) => {
-    dispatch(removeHiddenWordId(wordId));
+    console.log('sss')
+    if (wordId) dispatch(removeHiddenWordId(wordId));
   }
 
   const isHiddenSettingsVisible = useAppSelector(state => state.settingsUi.isHiddenSettingsVisible);
@@ -64,20 +64,22 @@ const HiddenSettings: React.FC = () => {
           />
           <FlatList
             style={styles.wordsContainer}
-            data={hiddenWordsFiltered}
-            renderItem={({ item }) => {
-              const highlightedWord = highlightSubtext(item.word, hiddenSearchValue)
-              return (
-                <View style={styles.wordContainer}>
-                  <Text style={styles.wordText}>{highlightedWord}</Text>
-                  <DeleteIcon onClick={() => handleRemoveHiddenWord(item.id)} style={styles.deleteIcon} />
-                </View> 
-              )
-            }}
-            keyExtractor={item => 'hidden' + item.id}
+            data={filteredHiddenWordIds}
+            renderItem={({ item }) => (
+              <View style={styles.wordContainer}>
+                <TText 
+                  wordId={item} 
+                  dataKey="word" 
+                  style={styles.wordText}
+                  highlightKey={hiddenSearchValue}
+                />
+                <DeleteIcon onPress={() => handleRemoveHiddenWord(item)} style={styles.deleteIcon} />
+              </View> 
+            )}
+            keyExtractor={item => 'hidden' + item}
             numColumns={1}
             ListEmptyComponent={() => (
-              hiddenWords.length ?
+              hiddenWordIds.length ?
                 <Text style={styles.notFoundText}>{t("noResultText")}</Text>
                 : <Text style={styles.notFoundText}>{t("noHiddenWordsText")}</Text>
             )}

@@ -16,7 +16,7 @@ import { MainIcon, HomeIcon, FeedbackIcon, ProfileIcon, InfoIcon, SettingsIcon, 
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { t } = useCustomTranslation('Sidebar');
+  const t = useCustomTranslation('Sidebar');
 
   const currentPath = usePathname();
 

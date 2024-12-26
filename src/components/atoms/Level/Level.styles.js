@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   innerSquareText: {
-    fontSize: 15,
+    fontSize: 14,
     color: 'white'
   }
 });

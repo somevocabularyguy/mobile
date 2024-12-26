@@ -6,22 +6,20 @@ import { createInstance } from 'i18next';
 type TranslationsProviderProps = {
   children: ReactNode;
   locale: string;
-  namespaces: string[];
-  isWords?: boolean;
 };
 
-const TranslationsProvider: React.FC<TranslationsProviderProps> = ({ children, locale, namespaces, isWords }) => {
+const TranslationsProvider: React.FC<TranslationsProviderProps> = ({ children, locale }) => {
   const [i18n, setI18n] = useState(createInstance());
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const initializeTranslations = async () => {
-      await initTranslations(locale, namespaces, i18n, isWords);
+      await initTranslations(locale, i18n);
       setIsInitialized(true);
     };
 
     initializeTranslations();
-  }, [locale, namespaces]);
+  }, [locale]);
 
   if (!isInitialized) {
     return null;

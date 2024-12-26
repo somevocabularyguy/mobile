@@ -1,6 +1,7 @@
 const i18nConfig = {
-  locales: ['en', 'tr'], // List of supported locales
-  defaultLocale: 'en',   // Default language for the app
+  locales: ['en', 'tr'],
+  supportedLanguages: ['en'],
+  defaultLocale: 'en',
 };
 
 export default i18nConfig;

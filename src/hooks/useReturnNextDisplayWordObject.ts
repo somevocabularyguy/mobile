@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { Word } from '@/types';
-import { finishWord, selectLevelWord } from '@/constants';
+import { finishWord } from '@/constants';
 
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
@@ -10,30 +10,27 @@ import { updateIteration } from '@/store/appStateSlice';
 const useReturnNextDisplayWordObject = (): (iterate: boolean) => Word | null => {
   const dispatch = useAppDispatch();
 
-  const checkedLevels = useAppSelector(state => state.appState.checkedLevels)
+  const [indexArray, setIndexArray] = useState<number[]>([]);
+
   const batch = useAppSelector(state => state.appState.batch)
   const displayWordObject = useAppSelector(state => state.word.displayWordObject)
   const iteration = useAppSelector(state => state.appState.iteration)
 
   const returnNextWordForPractice = (iterate: boolean): Word | null => {  
-    const nextWordObject: Word | null = batch[iteration] ? batch[iteration] : null;
+    let newIteration = iteration;
     if (iterate) {
-      const newIteration = iteration < batch.length - 1 ? iteration + 1 : 0;
+      newIteration = iteration < batch.length - 1 ? iteration + 1 : 0;
       dispatch(updateIteration(newIteration));
     }
+    const nextWordObject: Word | null = batch[newIteration] ? batch[newIteration] : null;
     return nextWordObject;
   }
 
-  const [indexArray, setIndexArray] = useState<number[]>([]);
 
   useEffect(() => {
     const newIndexArray = batch.flatMap((_, index) => Array(8).fill(index));
     setIndexArray(newIndexArray);
   }, [batch])
-
-  useEffect(() => {
-    dispatch(updateIteration(0));
-  }, [checkedLevels, dispatch])
 
   const returnNextWordForRandom = (): Word | null => {
 
@@ -50,7 +47,7 @@ const useReturnNextDisplayWordObject = (): (iterate: boolean) => Word | null => 
           const randomNumber = Math.floor(Math.random() * indexArray.length);
           currentIndex = indexArray[randomNumber]
           nextWordObject = batch[currentIndex];
-        } while (nextWordObject && displayWordObject && nextWordObject.word === displayWordObject.word);
+        } while (nextWordObject && displayWordObject && nextWordObject.id === displayWordObject.id);
       }
 
       const indexToRemove = indexArray.indexOf(currentIndex);
@@ -71,8 +68,6 @@ const useReturnNextDisplayWordObject = (): (iterate: boolean) => Word | null => 
   const isRandom = useAppSelector(state => state.word.isRandom);
 
   const returnNextDisplayWordObject = (iterate: boolean) => {
-    if (batch.length === 0) return selectLevelWord;
-
     return isRandom ? returnNextWordForRandom() : returnNextWordForPractice(iterate);
   }; 
 

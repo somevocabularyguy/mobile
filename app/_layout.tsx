@@ -22,13 +22,11 @@ export default function RootLayout() {
       savedLanguage = await storage.getItem("language") as string | null;
     }
     getLanguage();
-  })
+  }, [])
   savedLanguage = savedLanguage || Localization.getLocales()[0].languageCode || 'en';
 
-  const i18nNamespaces: string[] = ['app'];
-
   return (
-    <TranslationsProvider namespaces={i18nNamespaces} locale={savedLanguage}>
+    <TranslationsProvider locale={savedLanguage}>
       <ReduxProvider>
         <RootLayoutChildWrapper>
           <View style={styles.container}>

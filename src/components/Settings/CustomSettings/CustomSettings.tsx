@@ -1,31 +1,31 @@
-import styles from './CustomSettings.styles.js';
 import { useState } from 'react';
+import styles from './CustomSettings.styles.js';
+import { TText } from '@/components/atoms';
+import { Text, View, TextInput, FlatList } from 'react-native';
 
-import { useAppSelector, useAppDispatch } from '@/store/store';
+
 import { removeCustomWordId } from '@/store/userDataSlice';
+import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateIsCustomSettingsVisible } from '@/store/settingsUiSlice';
 
-import { Text, View, TextInput, FlatList } from 'react-native';
 import { DeleteIcon } from '@/assets/icons';
 import { SectionLabel } from '../reuseable';
 import { useCustomTranslation } from '@/hooks';
-import { highlightSubtext } from '@/utils/tsxUtils';
 
 const CustomSettings: React.FC = () => {
-  const { t } = useCustomTranslation("Settings.HiddenCustomSettings.CustomSettings");
+  const t = useCustomTranslation("Settings.HiddenCustomSettings.CustomSettings");
 
   const dispatch = useAppDispatch();
-
-  const words = useAppSelector(state => state.data.words);
-  const userData = useAppSelector(state => state.userData.userData);
-
-  const customWordIdsSet = new Set(userData.customWordIds);
-
   const [customSearchValue, setCustomSearchValue] = useState('');
 
-  const customWords = words.filter(wordObject => customWordIdsSet.has(wordObject.id));
+  const userData = useAppSelector(state => state.userData.userData);
+  const wordResources = useAppSelector(state => state.language.wordResources);
+  const customWordIds = userData.customWordIds;
+  const wordsLanguage = userData.languageArray[0];
 
-  const customWordsFiltered = customWords.filter(wordObject => wordObject.word.indexOf(customSearchValue) !== -1)
+  const customWordIdsFiltered = customWordIds.filter(wordId => 
+    wordResources[wordsLanguage][wordId].word.includes(customSearchValue))
+
 
   const handleRemoveCustomWord = (wordId: string) => {
     dispatch(removeCustomWordId(wordId));
@@ -63,20 +63,22 @@ const CustomSettings: React.FC = () => {
           />
           <FlatList
             style={styles.wordsContainer}
-            data={customWordsFiltered}
-            renderItem={({ item }) => {
-              const highlightedWord = highlightSubtext(item.word, customSearchValue)
-              return (
-                <View style={styles.wordContainer}>
-                  <Text style={styles.wordText}>{highlightedWord}</Text>
-                  <DeleteIcon onClick={() => handleRemoveCustomWord(item.id)} style={styles.deleteIcon} />
-                </View> 
-              )
-            }}
-            keyExtractor={item => 'custom' + item.id}
+            data={customWordIdsFiltered}
+            renderItem={({ item }) => (
+              <View style={styles.wordContainer}>
+                <TText 
+                  wordId={item} 
+                  dataKey="word" 
+                  style={styles.wordText}
+                  highlightKey={customSearchValue}
+                />
+                <DeleteIcon onPress={() => handleRemoveCustomWord(item)} style={styles.deleteIcon} />
+              </View> 
+            )}
+            keyExtractor={item => 'custom' + item}
             numColumns={1}
             ListEmptyComponent={() => (
-              customWords.length ?
+              customWordIds.length ?
                 <Text style={styles.notFoundText}>{t("noResultText")}</Text>
                 : <Text style={styles.notFoundText}>{t("noCustomWordsText")}</Text>
             )}

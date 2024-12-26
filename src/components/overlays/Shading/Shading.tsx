@@ -18,22 +18,22 @@ const Shading: React.FC = () => {
   const isDeletePopupVisible = useAppSelector(state => state.accountUi.isDeletePopupVisible);
 
   const closeShading = () => {
-    dispatch(updateIsShadingVisible(false));
+    if (isShadingVisible) dispatch(updateIsShadingVisible(false));
 
-    dispatch(updateIsSidebarVisible(false));
-    dispatch(updateIsLevelsVisible(false));
-    dispatch(updateIsSignInPopupVisible(false));
-    dispatch(updateIsSignOutPopupVisible(false));
-    dispatch(updateIsDeletePopupVisible(false));
+    if (isSidebarVisible) dispatch(updateIsSidebarVisible(false));
+    if (isLevelsVisible) dispatch(updateIsLevelsVisible(false));
+    if (isSignInPopupVisible) dispatch(updateIsSignInPopupVisible(false));
+    if (isSignOutPopupVisible) dispatch(updateIsSignOutPopupVisible(false));
+    if (isDeletePopupVisible) dispatch(updateIsDeletePopupVisible(false));
   }
 
   const changeAll = (key: string, boolean: boolean) => {
     if (boolean) {
-      if (key !== 'sidebar') dispatch(updateIsSidebarVisible(false));
-      if (key !== 'levels') dispatch(updateIsLevelsVisible(false));
-      if (key !== 'signInPopup') dispatch(updateIsSignInPopupVisible(false));
-      if (key !== 'signOutPopup') dispatch(updateIsSignOutPopupVisible(false));
-      if (key !== 'deletePopup') dispatch(updateIsDeletePopupVisible(false));
+      if (key !== 'sidebar' && isSidebarVisible) dispatch(updateIsSidebarVisible(false));
+      if (key !== 'levels' && isLevelsVisible) dispatch(updateIsLevelsVisible(false));
+      if (key !== 'signInPopup' && isSignInPopupVisible) dispatch(updateIsSignInPopupVisible(false));
+      if (key !== 'signOutPopup' && isSignOutPopupVisible) dispatch(updateIsSignOutPopupVisible(false));
+      if (key !== 'deletePopup' && isDeletePopupVisible) dispatch(updateIsDeletePopupVisible(false));
 
       if (!isShadingVisible) {
         dispatch(updateIsShadingVisible(true));

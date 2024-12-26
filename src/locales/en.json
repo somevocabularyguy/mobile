@@ -82,7 +82,7 @@
       "noProgress": "No Progress Data Found!"
     },
     "WordProgressDisplay": {
-
+      "noWordSelected": "No Word Is Selected."
     }
   },
  "Settings": {

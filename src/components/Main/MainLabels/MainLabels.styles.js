@@ -19,13 +19,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     height: 24,
   },
-  dynamicLabel: {
-    minHeight: 46,
+  dynamicLabelContainer: {
+    minHeight: 20,
   },
-  dynamicLabelItem: {
+  dynamicLabel: {
     fontSize: 16,
     color: 'white',
-    width: '100%',
     lineHeight: 18,
     textAlign: 'center',
     padding: 4,
@@ -39,6 +38,9 @@ const styles = StyleSheet.create({
   arrayText: {
     padding: 4,
     color: 'white'
+  },
+  hidden: {
+    display: 'none'
   }
 })
 

@@ -12,7 +12,7 @@ import { LevelKey } from '@/types';
 
 const LevelBox: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { t } = useCustomTranslation('Levels.LevelBox');
+  const t = useCustomTranslation('Levels.LevelBox');
 
   const levelKeys: LevelKey[] = ['easy', 'medium', 'hard', 'expert', 'custom']; 
 

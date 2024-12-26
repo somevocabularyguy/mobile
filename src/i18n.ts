@@ -7,9 +7,7 @@ import loadTranslation from '@/locales';
 
 export default async function initTranslations(
   locale: string,
-  namespaces: string[],
   i18nInstance?: ReturnType<typeof createInstance>,
-  isWords?: boolean 
 ) {
 
   i18nInstance = i18nInstance || createInstance();
@@ -18,15 +16,9 @@ export default async function initTranslations(
 
   i18nInstance.use(
     resourcesToBackend(
-      async (language: string, namespace: string) => {        
-        try {
-          const translations = loadTranslation(language, namespace, isWords);
-          return translations;
-        } catch (error) {
-          console.error(error); 
-          return {}
-        }
-      }
+      async (language: string) => (        
+        loadTranslation(language)
+      )
     )
   );
 
@@ -34,9 +26,6 @@ export default async function initTranslations(
     lng: locale,
     fallbackLng: i18nConfig.defaultLocale,
     supportedLngs: i18nConfig.locales,
-    defaultNS: namespaces[0],
-    fallbackNS: namespaces[0],
-    ns: namespaces,
   });
 
   return {

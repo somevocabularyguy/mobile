@@ -61,8 +61,11 @@ const styles = StyleSheet.create({
   },
   wordText: {
     textAlign: "center",
+    verticalAlign: 'middle',
+    paddingBottom: 3,
     fontSize: 20,
     flex: 1,
+    color: 'white',
   },  
   deleteIcon: {
     height: "100%",

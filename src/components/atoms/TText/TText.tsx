@@ -1,45 +1,66 @@
 import { Text, StyleProp, TextStyle } from 'react-native';
 import { useAppSelector } from '@/store/store';
-import { TranslationsProvider } from '@/components/wrappers';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { highlightSubtext } from '@/utils/tsxUtils';
 
 interface TTextProps {
-  translateKey: string;
-  style: StyleProp<TextStyle>
+  wordId: string;
+  dataKey?: 'word' | 'meaning' | 'example';
+  arrayKey?: 'synonyms' | 'antonyms';
+  arrayIndex?: number;
+  style?: StyleProp<TextStyle>;
+  highlightKey?: string; 
+  numberOfLinesNumber?: number;
+  minimumFontScaleNumber?: number;
+  adjustsFontSizeToFitParam?: boolean;
 }
+const TText: React.FC<TTextProps> = ({ wordId, dataKey, arrayKey, arrayIndex, style, highlightKey, adjustsFontSizeToFitParam, minimumFontScaleNumber, numberOfLinesNumber }) => {
+  const languageArray = useAppSelector(state => state.userData.userData.languageArray)
+  const wordResources = useAppSelector(state => state.language.wordResources)
 
-const TText: React.FC<TTextProps> = ({ translateKey, style }) => {
-  const namespaceArray = useAppSelector(state => state.userSettings.namespaceArray)
-  const [currentNamespaceIndex, setCurrentNamespaceIndex] = useState(0);
-  
+  const [dataIndex, setDataIndex] = useState(0);
+  const [dataArray, setDataArray] = useState<string[]>(() => {
+    let array: string[] = [];
+    if (dataKey) {
+      array = languageArray.map(language => wordResources[language][wordId][dataKey]);
+    } else if (arrayKey && arrayIndex) {
+      array = languageArray.map(language => wordResources[language][wordId][arrayKey][arrayIndex]);
+    }
+    return array;
+  });
+
+  useEffect(() => {
+    setDataIndex(0);
+  }, [wordId])
+
+  useEffect(() => {
+    let array: string[] = [];
+    if (dataKey) {
+      array = languageArray.map(language => wordResources[language][wordId][dataKey]);
+    } else if (arrayKey &&  arrayIndex !== undefined) {
+      array = languageArray.map(language => wordResources[language][wordId][arrayKey][arrayIndex]);
+    }
+    setDataArray(array);
+  }, [languageArray, wordId, dataKey, arrayKey, arrayIndex])
+
+  const handleClick = () => {
+    setDataIndex(prev => prev === dataArray.length - 1 ? 0 : prev + 1);
+  }
+
+  let word: string | React.JSX.Element = dataArray[dataIndex];
+
+  if (highlightKey && dataIndex === 0) {
+    word = highlightSubtext(word, highlightKey);
+  }
 
   return (
-    <TranslationsProvider locale={namespaceArray[0]} namespaces={[namespaceArray[currentNamespaceIndex]]} isWords={true}>
-      <InnerTText style={style} translateKey={translateKey} setCurrentNamespaceIndex={setCurrentNamespaceIndex}/>
-    </TranslationsProvider>
-  );
-};
-
-interface InnerTTextProps {
-  translateKey: string;
-  style: StyleProp<TextStyle>;
-  setCurrentNamespaceIndex: React.Dispatch<React.SetStateAction<number>>;
-}
-
-const InnerTText: React.FC<InnerTTextProps> = ({ translateKey, style, setCurrentNamespaceIndex }) => {
-  const { t } = useTranslation();
-
-  const namespaceArray = useAppSelector(state => state.userSettings.namespaceArray)
-  const handleLanguageChange = () => {
-    setCurrentNamespaceIndex(prev => prev === namespaceArray.length - 1 ? 0 : prev + 1);
-  };
-
-  return (
-    <Text
+    <Text 
+      onPress={handleClick}
       style={style}
-      onPress={handleLanguageChange}
-    >{t(translateKey)}</Text>
+      adjustsFontSizeToFit={adjustsFontSizeToFitParam}
+      numberOfLines={numberOfLinesNumber}
+      minimumFontScale={minimumFontScaleNumber}
+    >{word}</Text>
   );
 };
 
