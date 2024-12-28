@@ -1,7 +1,7 @@
 import storage from '@/storage';
 import { useEffect } from 'react';
 
-import { updateAppIsLoaded } from '@/store/loadingSlice';
+import { updateIsAppLoaded, updateIsLoading } from '@/store/loadingSlice';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 
 const useCheckAppLoaded = () => {
@@ -13,7 +13,7 @@ const useCheckAppLoaded = () => {
 
   const wordResources = useAppSelector(state => state.language.wordResources);
 
-  const appIsLoaded = useAppSelector(state => state.loading.appIsLoaded);
+  const isAppLoaded = useAppSelector(state => state.loading.isAppLoaded);
   const isUserDataLoaded = useAppSelector(state => state.userData.isUserDataLoaded);
 
   useEffect(() => {
@@ -26,8 +26,9 @@ const useCheckAppLoaded = () => {
         const arrayBoolean = words.length && levels.length; 
         const objectBoolean = Object.keys(wordResources).length;
 
-        if (!appIsLoaded && checkedLevelsBoolean && arrayBoolean && objectBoolean && isUserDataLoaded) {
-          dispatch(updateAppIsLoaded(true));
+        if (!isAppLoaded && checkedLevelsBoolean && arrayBoolean && objectBoolean && isUserDataLoaded) {
+          dispatch(updateIsAppLoaded(true));
+          dispatch(updateIsLoading(false));
         }
       }
       checkLoaded();

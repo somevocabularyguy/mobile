@@ -111,9 +111,9 @@ const Sidebar: React.FC = () => {
         <Line width={190} height={2} style={styles.linkDividerLine}/>
 
         {isSignedIn ? 
-          <Pressable style={styles.signInButton} onPress={openSignOutPopup}>
+          <Pressable style={styles.signOutButton} onPress={openSignOutPopup}>
             {/* <ExitIcon /> */}
-            <Text style={styles.signInButtonText}>{t("signOut")}</Text>
+            <Text style={styles.signOutButtonText}>{t("signOut")}</Text>
           </Pressable>
           :
           <Pressable style={styles.signInButton} onPress={openSignInPopup}>

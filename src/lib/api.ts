@@ -27,6 +27,40 @@ const getUserData = async (authToken: string): Promise<UserData | null> => {
   }
 }
 
+const verifySignIn = async (tempVerifyToken: string): Promise<string | null> => {
+  const config: AuthConfig = {
+    headers: {
+      Authorization: `Bearer ${tempVerifyToken}`
+    }
+  }
+
+  try {
+    const response = await axios.get(`${PROXY_URL}/api/mobile/proxy/entry/verify-sign-in`, config);
+
+    const { authToken } = response.data;
+    if (response.status === 200 && authToken) {
+      return authToken;
+    }
+    return null;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.code === 'ECONNREFUSED') {
+        console.log('Error: Could not connect to the server. Please check if the server is running.');
+      } else if (error.code === 'ETIMEDOUT') {
+        console.log('Error: Request timed out. Server may be slow or unreachable.');
+      } else {
+        // console.log(`Axios Error: ${error.message}`);
+      }
+      if (error.status === 401) {
+        return 'expired';
+      } else if (error.status === 403) {
+        return 'not-verified';
+      }
+    }
+    return null;
+  }
+}
+
 const sendMagicLink = async (email: string) => {
   const response = await axios.post(`${PROXY_URL}/api/mobile/proxy/entry/send-magic-link`, { email });
   return response;
@@ -37,18 +71,9 @@ const sendFeedbackData = async (feedbackData: FeedbackData) => {
   return response;
 }
 
-const logout = async () => {
-  const response = await axios.get(`${PROXY_URL}/api/mobile/logout`, { withCredentials: true });
-  return response
-}
-
 const deleteAccount = async () => {
   const response = await axios.delete(`${PROXY_URL}/api/mobile/proxy/entry/delete-account`, { withCredentials: true });
   return response;
 }
-// 
-// const checkIsVerified = async () => {
-//   const response = await axios.get(`${PROXY_URL}/api/mobile/proxy/entry`)
-// }
 
-export { getUserData, sendMagicLink, sendFeedbackData, logout, deleteAccount };
+export { getUserData, sendMagicLink, sendFeedbackData, deleteAccount, verifySignIn };

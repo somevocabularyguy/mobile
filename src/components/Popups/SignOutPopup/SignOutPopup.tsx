@@ -3,12 +3,13 @@ import styles from './SignOutPopup.styles.js';
 
 import { Link } from 'expo-router';
 
-import { logout } from '@/lib/api';
+import storage from '@/storage';
 import { Text, Pressable, View } from 'react-native';
 import { useCustomTranslation } from '@/hooks';
 
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateIsSignOutPopupVisible } from '@/store/accountUiSlice';
+import { updateIsSignedIn } from '@/store/userSettingsSlice';
 
 const SignOutPopup: React.FC = () => {
   const t = useCustomTranslation("Popups.SignOutPopup");
@@ -23,14 +24,9 @@ const SignOutPopup: React.FC = () => {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      const response = await logout();
-      if (response.status === 200) {
-        // window.location.href = 'http://localhost:3000'; //* Will Change
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    await storage.removeItem('authToken');
+    dispatch(updateIsSignedIn(false));
+    dispatch(updateIsSignOutPopupVisible(false));
   }
 
   const closePopup = () => {

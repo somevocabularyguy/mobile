@@ -87,6 +87,18 @@ const styles = StyleSheet.create({
     color: "#000000",
     textAlign: "center",
     lineHeight: 46,
+  },
+  signOutButton: {
+    width: 180,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: "#999999",
+  },
+  signOutButtonText: {
+    fontSize: 20,
+    color: "#000000",
+    textAlign: "center",
+    lineHeight: 46,
   }
 })
 

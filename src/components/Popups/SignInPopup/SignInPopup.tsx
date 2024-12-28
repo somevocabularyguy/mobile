@@ -4,22 +4,27 @@ import styles from './SignInPopup.styles.js';
 import { useState, useEffect, useRef } from 'react';
 import { Text, View, Pressable, TextInput } from 'react-native'
 
-import { useAppSelector } from '@/store/store';
+import storage from '@/storage';
+import { updateIsSignedIn } from '@/store/userSettingsSlice';
+import { useAppSelector, useAppDispatch } from '@/store/store';
+import { updateIsWaitingVerify, updateIsSignInPopupVisible } from '@/store/accountUiSlice';
 
 import { EmailIcon } from '@/assets/icons';
 
-import { sendMagicLink } from '@/lib/api';
+import { sendMagicLink, verifySignIn } from '@/lib/api';
 import { useCustomTranslation } from '@/hooks';
 
 const SignInPopup: React.FC = () => {
   const t = useCustomTranslation('Popups.SignInPopup');
 
+  const dispatch = useAppDispatch();
+
   const isSignInPopupVisible = useAppSelector(state => state.accountUi.isSignInPopupVisible);
+  const isWaitingVerify = useAppSelector(state => state.accountUi.isWaitingVerify);
 
   const [email, setEmail] = useState('');
   const [isWarned, setIsWarned] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(true);
   const [animationIndex, setAnimationIndex] = useState(0);
   const animationIndexRef = useRef(animationIndex);
 
@@ -43,8 +48,10 @@ const SignInPopup: React.FC = () => {
 
     try {
       const response = await sendMagicLink(email);
+      const { tempVerifyToken } = response.data;
       if (response.status === 200) {
-        setIsWaiting(true);
+        dispatch(updateIsWaitingVerify(true));
+        storage.setItem('tempVerifyToken', tempVerifyToken)
         setEmail('');
       }
       setIsSending(false);
@@ -55,7 +62,23 @@ const SignInPopup: React.FC = () => {
   };
 
   const handleRefresh = async () => {
-    // const response = await checkIsVerified();
+    const tempVerifyToken = await storage.getItem('tempVerifyToken');
+    if (tempVerifyToken) {
+      const response = await verifySignIn(tempVerifyToken);
+      if (response === 'expired') {
+        storage.removeItem('tempVerifyToken');
+        dispatch(updateIsWaitingVerify(false));
+        dispatch(updateIsSignInPopupVisible(false))
+      } else if (response === 'not-verified') {
+        console.log(response);
+      } else if (response) {
+        storage.setItem('authToken', response);
+        storage.removeItem('tempVerifyToken');
+        dispatch(updateIsSignedIn(true));
+        dispatch(updateIsWaitingVerify(false));
+        dispatch(updateIsSignInPopupVisible(false))
+      }
+    }
   }
 
 
@@ -79,13 +102,13 @@ const SignInPopup: React.FC = () => {
   }, [isSending]);
 
   const warningBoxStyle = [styles.warningBox, isWarned ? {} : styles.hidden];
-  const mainSectionStyle = [styles.mainSection, isWaiting ? styles.none : {}];
-  const waitingSectionStyle = [styles.waitingSection, isWaiting ? {} : styles.none];
+  const mainSectionStyle = [styles.mainSection, isWaitingVerify ? styles.none : {}];
+  const waitingSectionStyle = [styles.waitingSection, isWaitingVerify ? {} : styles.none];
   const containerStyle = [styles.container, isSignInPopupVisible ? styles.containerVisible : {}]
 
   return (
     <View style={containerStyle} pointerEvents={isSignInPopupVisible ? 'auto' : 'none'}>
-      {isWaiting ? ( 
+      {isWaitingVerify ? ( 
         <View style={waitingSectionStyle}>
 
           <View style={styles.waitingSectionInfoContainer}>
