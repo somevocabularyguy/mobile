@@ -12,7 +12,7 @@ const getUserData = async (authToken: string): Promise<UserData | null> => {
   }
 
   try {
-    const response = await axios.get(`${PROXY_URL}/api/mobile/proxy/data/get-data`, config);
+    const response = await axios.get(`${PROXY_URL}/api/mobile/proxy/data/get-user-data`, config);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -27,7 +27,36 @@ const getUserData = async (authToken: string): Promise<UserData | null> => {
   }
 }
 
-const verifySignIn = async (tempVerifyToken: string): Promise<string | null> => {
+const syncUserData = async (userDataToSync: UserData | null = null, authToken: string) => {
+
+  const config: AuthConfig = {
+    headers: {
+      Authorization: `Bearer ${authToken}`
+    }
+  }
+
+  try {
+    const response = await axios.post(`${PROXY_URL}/api/mobile/proxy/data/sync-user-data`, { userDataToSync }, config);
+    return response.data as { serverUserData: UserData } | null;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.code === 'ECONNREFUSED') {
+        console.log('Error: Could not connect to the server. Please check if the server is running.');
+      }
+    } else {
+      console.error(error)
+    }
+
+    return null;
+  }
+}
+
+interface VerifyResponse {
+  message: string;
+  authToken: string | null;
+}
+
+const verifySignIn = async (tempVerifyToken: string): Promise<VerifyResponse> => {
   const config: AuthConfig = {
     headers: {
       Authorization: `Bearer ${tempVerifyToken}`
@@ -39,9 +68,9 @@ const verifySignIn = async (tempVerifyToken: string): Promise<string | null> => 
 
     const { authToken } = response.data;
     if (response.status === 200 && authToken) {
-      return authToken;
+      return { message: 'verified', authToken: authToken };
     }
-    return null;
+    return { message: 'unknown', authToken: null };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.code === 'ECONNREFUSED') {
@@ -52,12 +81,12 @@ const verifySignIn = async (tempVerifyToken: string): Promise<string | null> => 
         // console.log(`Axios Error: ${error.message}`);
       }
       if (error.status === 401) {
-        return 'expired';
+        return { message: 'expired', authToken: null };
       } else if (error.status === 403) {
-        return 'not-verified';
+        return { message: 'not-verified', authToken: null };
       }
     }
-    return null;
+    return { message: 'unknown error', authToken: null };
   }
 }
 
@@ -76,4 +105,4 @@ const deleteAccount = async () => {
   return response;
 }
 
-export { getUserData, sendMagicLink, sendFeedbackData, deleteAccount, verifySignIn };
+export { getUserData, sendMagicLink, sendFeedbackData, deleteAccount, verifySignIn, syncUserData };

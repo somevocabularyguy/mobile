@@ -1,4 +1,4 @@
-import { useLoadApp } from '@/hooks';
+import { useLoadApp, useMaintainApp, useCheckAppLoaded } from '@/hooks';
 
 interface RootLayoutChildWrapperProps {
   children: React.ReactNode;
@@ -6,6 +6,11 @@ interface RootLayoutChildWrapperProps {
 
 const RootLayoutChildWrapper: React.FC<RootLayoutChildWrapperProps> = ({ children }) => {
   useLoadApp();
+
+  useMaintainApp();
+
+  useCheckAppLoaded();
+
   return children
 }
 

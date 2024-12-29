@@ -1,6 +1,8 @@
+import { Word, WordsObject } from '@/types';
+ 
 interface AllWordResourcesMap {
   [key: string]: {
-    [key: string]: any;
+    [key: string]: WordsObject;
   }
 }
 
@@ -15,7 +17,7 @@ const allWordResourcesMap: AllWordResourcesMap = {
 }
 
 interface AllWordsMap {
-  [key: string]: any;
+  [key: string]: Word[];
 }
 
 const allWordsMap: AllWordsMap = {

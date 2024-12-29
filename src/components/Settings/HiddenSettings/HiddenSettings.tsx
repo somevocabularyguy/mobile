@@ -28,7 +28,6 @@ const HiddenSettings: React.FC = () => {
     wordResources[wordsLanguage][wordId].word.includes(hiddenSearchValue))
 
   const handleRemoveHiddenWord = (wordId: string) => {
-    console.log('sss')
     if (wordId) dispatch(removeHiddenWordId(wordId));
   }
 

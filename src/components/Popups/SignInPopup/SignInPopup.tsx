@@ -5,14 +5,19 @@ import { useState, useEffect, useRef } from 'react';
 import { Text, View, Pressable, TextInput } from 'react-native'
 
 import storage from '@/storage';
+import { updateWords } from '@/store/wordSlice';
+import { updateUserData } from '@/store/userDataSlice';
 import { updateIsSignedIn } from '@/store/userSettingsSlice';
 import { useAppSelector, useAppDispatch } from '@/store/store';
+import { addSingleWordResource, removeSingleWordResource } from '@/store/languageSlice';
 import { updateIsWaitingVerify, updateIsSignInPopupVisible } from '@/store/accountUiSlice';
 
 import { EmailIcon } from '@/assets/icons';
 
-import { sendMagicLink, verifySignIn } from '@/lib/api';
+import { UserData } from '@/types';
 import { useCustomTranslation } from '@/hooks';
+import { loadWordResources } from '@/utils/dataUtils';
+import { sendMagicLink, verifySignIn, syncUserData } from '@/lib/api';
 
 const SignInPopup: React.FC = () => {
   const t = useCustomTranslation('Popups.SignInPopup');
@@ -65,22 +70,53 @@ const SignInPopup: React.FC = () => {
     const tempVerifyToken = await storage.getItem('tempVerifyToken');
     if (tempVerifyToken) {
       const response = await verifySignIn(tempVerifyToken);
-      if (response === 'expired') {
+      if (response.authToken) {
+
+        storage.setItem('authToken', response.authToken);
         storage.removeItem('tempVerifyToken');
-        dispatch(updateIsWaitingVerify(false));
-        dispatch(updateIsSignInPopupVisible(false))
-      } else if (response === 'not-verified') {
-        console.log(response);
-      } else if (response) {
-        storage.setItem('authToken', response);
-        storage.removeItem('tempVerifyToken');
+
+        const storedUserData = await storage.getItem('userData') as UserData;
+        const dataResponse = await syncUserData(storedUserData, response.authToken);
+        if (dataResponse) {
+          dispatch(updateUserData(dataResponse.serverUserData));
+          const oldLanguageArray = storedUserData.languageArray;
+          const newLanguageArray = dataResponse.serverUserData.languageArray;
+
+          oldLanguageArray.forEach(language => {
+            if (!newLanguageArray.includes(language)) {
+              dispatch(removeSingleWordResource(language))
+            }
+          })
+
+          const { requestedWords, requestedWordResources } = loadWordResources(oldLanguageArray, newLanguageArray);
+
+          if (requestedWords) {
+            dispatch(updateWords(requestedWords))
+          }
+
+          if (requestedWordResources) {
+            Object.keys(requestedWordResources).forEach(language => {
+              dispatch(addSingleWordResource({ language: language, wordResource: requestedWordResources[language] }))
+            })
+          }
+        }
+
         dispatch(updateIsSignedIn(true));
+        dispatch(updateIsSignInPopupVisible(false))
+        dispatch(updateIsWaitingVerify(false));
+
+      } else if (response.message === 'not-verified') {
+
+        console.log(response);
+
+      } else if (response.authToken) {
+
+        storage.removeItem('tempVerifyToken');
         dispatch(updateIsWaitingVerify(false));
         dispatch(updateIsSignInPopupVisible(false))
       }
     }
   }
-
 
   useEffect(() => {
     let loadingInterval: NodeJS.Timeout | null = null;
