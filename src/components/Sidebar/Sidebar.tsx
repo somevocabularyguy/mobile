@@ -12,7 +12,7 @@ import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateIsSidebarVisible, updateIsLevelsVisible } from '@/store/uiSlice';
 import { updateIsSignInPopupVisible, updateIsSignOutPopupVisible } from '@/store/accountUiSlice';
 
-import { MainIcon, HomeIcon, FeedbackIcon, ProfileIcon, InfoIcon, SettingsIcon, GuideIcon, ArrowIcon } from '@/assets/icons';
+import { PracticeIcon, MainIcon, FeedbackIcon, ProfileIcon, InfoIcon, SettingsIcon, GuideIcon, ArrowIcon, MenuIcon } from '@/assets/icons';
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -70,8 +70,8 @@ const Sidebar: React.FC = () => {
 
         <Link href="/" style={returnLinkStyle('/')}>
           <View style={styles.sidebarLinkContainer}>
-            <HomeIcon width={36} height={36} />
-            <Text style={styles.sidebarLinkText}>{t('home')}</Text>
+            <PracticeIcon style={{ marginRight: 2, marginLeft: 4 }} width={30} height={30} />
+            <Text style={styles.sidebarLinkText}>{t('practice')}</Text>
           </View>
         </Link>
         <Link href="/settings" style={returnLinkStyle('/settings')}>
@@ -103,7 +103,7 @@ const Sidebar: React.FC = () => {
         </Link>
         <Link href="/about" style={returnLinkStyle('/about')}>
           <View style={styles.sidebarLinkContainer}>
-            <InfoIcon width={36} height={36} />
+            <InfoIcon fill="#e8eaed" width={36} height={36} />
             <Text style={styles.sidebarLinkText}>{t('about')}</Text>
           </View>
         </Link>
@@ -125,13 +125,11 @@ const Sidebar: React.FC = () => {
       <Pressable style={sidebarToggleStyle} onPress={toggleSidebar}>
         {isSidebarVisible ? (
           <View style={styles.sidebarActiveIconContainer}>
-            <ArrowIcon width={84} height={84} />
-            <ArrowIcon width={84} height={84} />
+            <ArrowIcon style={styles.activeArrow} width={64} height={64} />
+            <ArrowIcon style={styles.activeArrow} width={64} height={64} />
           </View>
         ) : (
-          <>
-            <ArrowIcon style={styles.sidebarSingleIcon} width={84} height={84} />
-          </>
+          <MenuIcon width={52} height={52} />
         )}
       </Pressable>
     </>

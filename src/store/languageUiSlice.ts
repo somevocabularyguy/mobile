@@ -1,22 +1,43 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface LanguageUiState {
-  isLanguageDropdownActive: boolean;
+  isLanguageVisible: boolean;
+  isAppLanguageSelectVisible: boolean;
+  isWordsLanguageSelectVisible: boolean;
+  isOtherLanguagesSelectVisible: boolean;
 }
 
 const initialState: LanguageUiState = {
-  isLanguageDropdownActive: false
+  isLanguageVisible: false,
+  isAppLanguageSelectVisible: true,
+  isWordsLanguageSelectVisible: false,
+  isOtherLanguagesSelectVisible: false
 }
 
 const languageUiSlice = createSlice({
   name: 'languageUi',
   initialState,
   reducers: {
-    updateIsLanguageDropdownActive: (state, action: PayloadAction<boolean>) => {
-      state.isLanguageDropdownActive = action.payload;
+    updateIsLanguageVisible: (state, action: PayloadAction<boolean>) => {
+      state.isLanguageVisible = action.payload;
+    },
+    updateIsAppLanguageSelectVisible: (state, action: PayloadAction<boolean>) => {
+      state.isAppLanguageSelectVisible = action.payload;
+    },
+    updateIsWordsLanguageSelectVisible: (state, action: PayloadAction<boolean>) => {
+      state.isWordsLanguageSelectVisible = action.payload;
+    },
+    updateIsOtherLanguagesSelectVisible: (state, action: PayloadAction<boolean>) => {
+      state.isOtherLanguagesSelectVisible = action.payload;
     }
   }
 })
 
-export const { updateIsLanguageDropdownActive } = languageUiSlice.actions; 
+export const { 
+  updateIsLanguageVisible,
+  updateIsAppLanguageSelectVisible, 
+  updateIsWordsLanguageSelectVisible, 
+  updateIsOtherLanguagesSelectVisible, 
+} = languageUiSlice.actions; 
+
 export default languageUiSlice.reducer;

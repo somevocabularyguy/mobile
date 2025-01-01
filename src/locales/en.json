@@ -7,7 +7,7 @@
       "selectLevelsText": "Select Levels"
     },
     "CurrentWords": {
-      "label": "Current Words",
+      "label": "Selected Words",
       "copyButtonText": "Copy",
       "copiedAlert": "Copied To Clipboard"
     },
@@ -38,6 +38,8 @@
       "removeCustom": "Remove Word From Custom"
     },
     "MainLabels": {
+      "finishText": "Finished The Random",
+      "selectLevelText": "PLease Select Level",
       "practiceText": "Practice",
       "randomText": "Random",
       "definitionText": "Definition:",
@@ -65,11 +67,10 @@
       "sendingText": "Sending",
       "warningText": "Please Enter Valid Email",
       "emailLabel": "Email",
-      "placeHolderStart": "dontstoplearning",
+      "placeholderStart": "dontstoplearning",
       "waitingText": "Check Your Email For Special Login Link",
       "waitingSmallText": "Be sure to check your spam folder...",
-      "refreshText1": "After clicking the link,",
-      "refreshText2": "Come back and refresh this page.",
+      "refreshText": "Refresh this page after clicking the link.",
       "refreshButton": "Refresh"
     }
   },
@@ -93,7 +94,7 @@
       "deleteButton": "Delete Account"
     },
     "HiddenCustomSettings": {
-      "labelText": "Hidden And Custom Settings",
+      "labelText": "Hidden And Custom Words",
       "CustomSettings": {
         "labelText": "Custom Words",
         "removeCustomLabel": "Remove From Custom",
@@ -136,7 +137,7 @@
     }
   },
   "Sidebar": {
-    "home": "Home",
+    "practice": "Practice",
     "settings": "Settings",
     "progress": "Progress",
     "guide": "How To Use",
@@ -144,5 +145,27 @@
     "about": "About",
     "signIn": "Sign In",
     "signOut": "Sign Out"
+  },
+  "Language": {
+    "en": "English",
+    "ru": "Russian",
+    "ja": "Japanese",
+    "zh": "Chinese",
+    "tr": "Turkish",
+    "loading": "Loading Language Data...",
+    "WordsLanguageSelect": {
+      "label": "Select Learning Language",
+      "button": "Apply Changes"
+    },
+    "OtherLanguagesSelect": {
+      "label": "Select Additional Languages",
+      "button": "Apply Changes"
+    },
+    "AppLanguageSelect": {
+      "label": "Language"
+    },
+    "LanguageStrip": {
+      "label": "Language"
+    }
   }
 }

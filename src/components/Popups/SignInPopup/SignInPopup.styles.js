@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     position: "absolute",
-    zIndex: 1002,
+    zIndex: 1000,
     top: "30%",
     left: "5%",
     opacity: 0

@@ -51,13 +51,13 @@ const Levels: React.FC = () => {
       <Pressable style={levelsToggleStyle} onPress={toggleLevels}>
         {isLevelsVisible ? (
           <View style={styles.levelsActiveIconContainer}>
-            <ArrowIcon width={84} height={84} />
-            <ArrowIcon width={84} height={84} />
-            <ArrowIcon width={84} height={84} />
+            <ArrowIcon width={64} height={64} />
+            <ArrowIcon width={64} height={64} />
+            <ArrowIcon width={64} height={64} />
           </View>
         ) : (
           <>
-            <ArrowIcon style={styles.levelsSingleIcon} width={84} height={84} />
+            <Text style={{ fontSize: 40, fontWeight: 'bold', color: '#e8eaed', textAlign: 'center' }}>LV</Text>
           </>
         )}
       </Pressable>

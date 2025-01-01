@@ -1,3 +1,9 @@
-import LanguageDropdown from './LanguageDropdown';
+import AppLanguageSelect from './AppLanguageSelect';
+import WordsLanguageSelect from './WordsLanguageSelect';
+import OtherLanguagesSelect from './OtherLanguagesSelect';
 
-export { LanguageDropdown };
+export { AppLanguageSelect, WordsLanguageSelect, OtherLanguagesSelect };
+
+import Language from './Language';
+
+export default Language;

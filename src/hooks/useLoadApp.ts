@@ -17,6 +17,8 @@ import { loadWordResourcesInitial } from '@/utils/dataUtils';
 
 import { verifySignIn, syncUserData } from '@/lib/api';
 
+// storage.clearAll();
+
 const useLoadApp = () => {
   const dispatch = useAppDispatch();
 

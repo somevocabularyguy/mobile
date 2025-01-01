@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
     bottom: 4,
     left: 4,
     backgroundColor: 'green',
-    zIndex: 30
+    zIndex: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   sidebarToggleActive: {
     width: 212,
@@ -69,10 +71,10 @@ const styles = StyleSheet.create({
   sidebarActiveIconContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+    gap: 20,
   },
-  sidebarSingleIcon: {
-    right: 8,
-    bottom: 10
+  activeArrow: {
+    transform: [{ rotate: '180deg' }],
   },
   signInButton: {
     width: 180,

@@ -20,11 +20,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#f2b500',
     justifyContent: 'center',
-    padding: 10
   },
   mainButtonText: {
     textAlign: 'center',
-    lineHeight: 32,
+    verticalAlign: 'middle',
     fontSize: 24,
     fontFamily: 'Poppins',
   },

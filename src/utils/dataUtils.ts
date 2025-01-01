@@ -1,7 +1,7 @@
 import { WordResources, Word } from '@/types';
 import { allWordResourcesMap, allWordsMap } from '@/words'
 
-const loadWordResources = (oldLanguageArray: string[], newLanguageArray: string[]) => {
+const loadWordResources = (oldLanguageArray: string[], newLanguageArray: string[], requestedWordsLanguage?: string) => {
 
   let wordsLanguage: string = newLanguageArray[0];
   let newWordsLanguage: string | null = null;
@@ -9,6 +9,8 @@ const loadWordResources = (oldLanguageArray: string[], newLanguageArray: string[
 
   if (newLanguageArray[0] !== oldLanguageArray[0]) {
     newWordsLanguage = newLanguageArray[0];
+  } else {
+    newWordsLanguage = requestedWordsLanguage || null;
   }
 
   newLanguageArray.forEach(language => {

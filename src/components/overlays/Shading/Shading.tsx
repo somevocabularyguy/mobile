@@ -6,6 +6,7 @@ import { Pressable, View } from 'react-native';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { updateIsShadingVisible, updateIsLevelsVisible, updateIsSidebarVisible } from '@/store/uiSlice';
 import { updateIsSignInPopupVisible, updateIsDeletePopupVisible, updateIsSignOutPopupVisible } from '@/store/accountUiSlice';
+import { updateIsLanguageVisible } from '@/store/languageUiSlice';
 
 const Shading: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const Shading: React.FC = () => {
   const isSignInPopupVisible = useAppSelector(state => state.accountUi.isSignInPopupVisible);
   const isSignOutPopupVisible = useAppSelector(state => state.accountUi.isSignOutPopupVisible);
   const isDeletePopupVisible = useAppSelector(state => state.accountUi.isDeletePopupVisible);
+  const isLanguageVisible = useAppSelector(state => state.languageUi.isLanguageVisible);
 
   const closeShading = () => {
     if (isShadingVisible) dispatch(updateIsShadingVisible(false));
@@ -25,6 +27,7 @@ const Shading: React.FC = () => {
     if (isSignInPopupVisible) dispatch(updateIsSignInPopupVisible(false));
     if (isSignOutPopupVisible) dispatch(updateIsSignOutPopupVisible(false));
     if (isDeletePopupVisible) dispatch(updateIsDeletePopupVisible(false));
+    if (isLanguageVisible) dispatch(updateIsLanguageVisible(false));
   }
 
   const changeAll = (key: string, boolean: boolean) => {
@@ -34,12 +37,22 @@ const Shading: React.FC = () => {
       if (key !== 'signInPopup' && isSignInPopupVisible) dispatch(updateIsSignInPopupVisible(false));
       if (key !== 'signOutPopup' && isSignOutPopupVisible) dispatch(updateIsSignOutPopupVisible(false));
       if (key !== 'deletePopup' && isDeletePopupVisible) dispatch(updateIsDeletePopupVisible(false));
+      if (key !== 'language' && isLanguageVisible) dispatch(updateIsLanguageVisible(false));
 
       if (!isShadingVisible) {
         dispatch(updateIsShadingVisible(true));
       }
     } else {
-      if (!isSidebarVisible && !isLevelsVisible && !isSignInPopupVisible && !isSignOutPopupVisible && !isDeletePopupVisible) {
+      const shadingBoolean = (
+        !isSidebarVisible && 
+        !isLevelsVisible && 
+        !isSignInPopupVisible && 
+        !isSignOutPopupVisible && 
+        !isDeletePopupVisible && 
+        !isLanguageVisible
+      );
+
+      if (shadingBoolean) {
         dispatch(updateIsShadingVisible(false));
       }
     }
@@ -64,6 +77,10 @@ const Shading: React.FC = () => {
   useEffect(() => {
     changeAll('deletePopup', isDeletePopupVisible);
   }, [isDeletePopupVisible]);
+
+  useEffect(() => {
+    changeAll('language', isLanguageVisible);
+  }, [isLanguageVisible]);
 
   const shadingStyle = [
     styles.shading,
