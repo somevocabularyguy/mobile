@@ -64,6 +64,7 @@ const CustomSettings: React.FC = () => {
           <FlatList
             style={styles.wordsContainer}
             data={customWordIdsFiltered}
+            nestedScrollEnabled={true}
             renderItem={({ item }) => (
               <View style={styles.wordContainer}>
                 <TText 

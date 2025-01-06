@@ -40,6 +40,44 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 20
   },
+  randomToggleContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10
+  },
+  randomToggle: {
+    height: 40, 
+    width: 100,
+    borderRadius: 30,
+    borderWidth: 4,
+    borderColor: '#e8eaed',
+    backgroundColor: '#e8eaed',
+    justifyContent: 'center',
+  },
+  randomToggleActive: {
+    borderWidth: 4,
+    borderColor: 'greenyellow',
+    backgroundColor: '#ff8855',
+  },
+  randomnessButtonText: {
+    fontSize: 16,
+    textAlign: 'center',
+    bottom: 1
+  },
+  infoIconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 45,
+    height: 45,
+    backgroundColor: '#ffbf00',
+    borderRadius: 12,
+    marginRight: 10,
+  },
+  infoIcon: {
+    width: 32,
+  },
 });
 
 export default styles;

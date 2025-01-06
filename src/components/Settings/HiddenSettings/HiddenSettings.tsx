@@ -64,6 +64,7 @@ const HiddenSettings: React.FC = () => {
           <FlatList
             style={styles.wordsContainer}
             data={filteredHiddenWordIds}
+            nestedScrollEnabled
             renderItem={({ item }) => (
               <View style={styles.wordContainer}>
                 <TText 

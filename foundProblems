@@ -1,10 +1,12 @@
-make settings scrollable.!!!!!
-add practice-random buttons!!
+next word is very inefficient!!
+
+make settings scrollable.
 
 bottom of levelArray is not fully visible.
 
 hide and add to has efficiency problem.
 hide and add to is prone to duplication because of this delay.
+
 waitingVerify token delete after 24 hours.
 
 sign in popup will be split.

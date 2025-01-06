@@ -2,14 +2,14 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   levelWordsContainer: {
-    height: 172,
+    height: 162,
   },
   levelWordsLabel: {
     fontWeight: 'bold',
     fontSize: 22,
     textAlign: 'center',
     color: 'white',
-    marginBottom: 10
+    marginBottom: 6
   },
   levelWordsGrid: {
     width: '80%',
